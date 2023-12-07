@@ -26,3 +26,10 @@ rm stop-minecraft-server.zip
 zip -r stop-minecraft-server.zip run.rb vendor
 ```
 
+## 通知方法
+### discord
+webhook urlを.envに設定してください
+サーバー設定 > 連携サービス > ウェブフック
+
+### LINE
+現在非推奨です
