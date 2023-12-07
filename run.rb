@@ -53,15 +53,15 @@ def run_instance()
   region = ENV["AWS_REGION"]
   instance_id = ENV["TARGET_INSTANCE"]
 
-  notify_line("起動するよ")
+  notify("起動するよ")
 
   ec2_client = Aws::EC2::Client.new(region: region)
   if instance_started?(ec2_client, instance_id)
     public_ip = get_instance_public_ip(ec2_client, instance_id)
-    notify_line(public_ip)
+    notify(public_ip)
     public_ip
   else
-    notify_line("Could not start instance.")
+    notify("Could not start instance.")
     "-"
   end
 end
@@ -75,4 +75,3 @@ def lambda_handler(event:, context:)
 end
 
 run_instance if $PROGRAM_NAME == __FILE__
-

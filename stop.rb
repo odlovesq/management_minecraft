@@ -35,14 +35,14 @@ def stop_instance()
   region = ENV["AWS_REGION"]
   instance_id = ENV["TARGET_INSTANCE"]
 
-  notify_line("停止するよ")
+  notify("停止するよ")
   
   ec2_client = Aws::EC2::Client.new(region: region)
   if instance_stopped?(ec2_client, instance_id)
-    notify_line("停止したよ")
+    notify("停止したよ")
     true
   else
-    notify_line("Could not stop instance.")
+    notify("Could not stop instance.")
     false
   end
 end
