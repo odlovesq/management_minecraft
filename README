@@ -1,3 +1,20 @@
+## 環境構築
+```
+cp .env.sample .env #必要な情報を埋める
+bundle config set path 'vendor/bundle'
+bundle install
+```
+
+## 起動方法
+```
+bundle exec ruby run.rb
+```
+
+## 停止方法
+```
+bundle exec ruby stop.rb
+```
+
 ## zip
 ```
 rm run-minecraft-server.zip
