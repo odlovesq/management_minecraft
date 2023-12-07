@@ -1,0 +1,11 @@
+## zip
+```
+rm run-minecraft-server.zip
+zip -r run-minecraft-server.zip run.rb vendor
+```
+
+```
+rm stop-minecraft-server.zip
+zip -r stop-minecraft-server.zip run.rb vendor
+```
+
