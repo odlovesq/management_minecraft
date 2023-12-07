@@ -1,6 +1,7 @@
 require 'aws-sdk-ec2'
 require 'faraday'
 require 'dotenv/load'
+require './notify'
 
 def instance_stopped?(ec2_client, instance_id)
   response = ec2_client.describe_instance_status(instance_ids: [instance_id])
@@ -28,29 +29,6 @@ def instance_stopped?(ec2_client, instance_id)
 rescue StandardError => e
   puts "Error stopping instance: #{e.message}"
   return false
-end
-
-def notify_line(text)
-  puts text
-  connection = Faraday.new(
-    url: 'https://api.line.me',
-    headers: {
-      'Content-Type' => 'application/json',
-      'Authorization' => "Bearer #{ENV['LINE_CHANNEL_ACCESS_TOKEN']}",
-    }
-  )
-
-  params = {
-    "to": ENV['LINE_GROUP_ID'],
-    "messages":[
-      {
-        :type => "text",
-        :text => text,
-      },
-    ]
-  }
-  response = connection.post '/v2/bot/message/push', params.to_json
-  puts response.body
 end
 
 def stop_instance()

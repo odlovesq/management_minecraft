@@ -1,6 +1,7 @@
 require 'aws-sdk-ec2'
 require 'faraday'
 require 'dotenv/load'
+require './notify'
 
 def instance_started?(ec2_client, instance_id)
   response = ec2_client.describe_instance_status(instance_ids: [instance_id])
@@ -48,35 +49,12 @@ rescue StandardError => e
   puts "Error getting information about instance: #{e.message}"
 end
 
-def notify_line(text)
-  puts text
-  connection = Faraday.new(
-    url: 'https://api.line.me',
-    headers: {
-      'Content-Type' => 'application/json',
-      'Authorization' => "Bearer #{ENV['LINE_CHANNEL_ACCESS_TOKEN']}",
-    }
-  )
-
-  params = {
-    "to": ENV['LINE_GROUP_ID'],
-    "messages":[
-      {
-        :type => "text",
-        :text => text,
-      },
-    ]
-  }
-  response = connection.post '/v2/bot/message/push', params.to_json
-  puts response.body
-end
-
 def run_instance()
   region = ENV["AWS_REGION"]
   instance_id = ENV["TARGET_INSTANCE"]
 
   notify_line("起動するよ")
-  
+
   ec2_client = Aws::EC2::Client.new(region: region)
   if instance_started?(ec2_client, instance_id)
     public_ip = get_instance_public_ip(ec2_client, instance_id)
