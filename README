@@ -18,12 +18,12 @@ bundle exec ruby stop.rb
 ## zip
 ```
 rm run-minecraft-server.zip
-zip -r run-minecraft-server.zip run.rb vendor
+zip -r run-minecraft-server.zip run.rb notify.rb vendor
 ```
 
 ```
 rm stop-minecraft-server.zip
-zip -r stop-minecraft-server.zip run.rb vendor
+zip -r stop-minecraft-server.zip stop.rb notify.rb vendor
 ```
 
 ## 通知方法
